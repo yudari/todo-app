@@ -1,6 +1,5 @@
 /* Global Styles */
 
-/* Membuat font menjadi Roboto yang sesuai dengan standar Google */
 body {
     font-family: 'Roboto', sans-serif;
     margin: 0;
@@ -10,9 +9,8 @@ body {
   
   /* App Container Styles */
   
-  /* Membuat container app yang berisi form, tombol, dan daftar todo */
   .app-container {
-    max-width: 500px;
+    max-width: 600px;
     margin: 50px auto;
     padding: 20px;
     background-color: #ffffff;
@@ -23,7 +21,6 @@ body {
   
   /* Heading Styles */
   
-  /* Membuat judul app yang berisi teks "Aplikasi Todo" */
   h1 {
     color: #333;
     margin-bottom: 20px;
@@ -33,14 +30,12 @@ body {
   
   /* Input Styles */
   
-  /* Membuat container input yang berisi input field dan tombol add */
   .input-container {
     display: flex;
     justify-content: center;
     margin-bottom: 20px;
   }
   
-  /* Membuat input field yang akan diisi oleh user */
   .input-field {
     flex: 1;
     padding: 12px;
@@ -51,14 +46,12 @@ body {
     transition: border-color 0.3s;
   }
   
-  /* Membuat input field berwarna hijau saat di fokus */
   .input-field:focus {
     border-color: #4caf50;
   }
   
   /* Add Button Styles */
   
-  /* Membuat tombol add yang akan menambahkan todo baru */
   .add-button {
     background-color: #4caf50;
     color: white;
@@ -71,7 +64,6 @@ body {
     transition: background-color 0.3s, transform 0.3s;
   }
   
-  /* Membuat tombol add berwarna hijau tua saat di hover */
   .add-button:hover {
     background-color: #45a049;
     transform: scale(1.05);
@@ -79,7 +71,6 @@ body {
   
   /* Loading Text Styles */
   
-  /* Membuat teks loading yang akan muncul saat data todo sedang diambil */
   .loading-text {
     font-size: 18px;
     color: #4caf50;
@@ -87,7 +78,6 @@ body {
   
   /* Todo Container Styles */
   
-  /* Membuat container todo yang berisi daftar todo */
   .todo-container {
     display: flex;
     flex-direction: column;
@@ -96,7 +86,6 @@ body {
   
   /* Todo Item Styles */
   
-  /* Membuat item todo yang berisi teks, checkbox, dan tombol delete */
   .todo-item {
     display: flex;
     align-items: center;
@@ -109,23 +98,97 @@ body {
     transition: background-color 0.3s, box-shadow 0.3s;
   }
   
-  /* Membuat item todo berwarna putih saat di hover */
   .todo-item:hover {
     background-color: #f1f1f1;
     box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
   }
   
-  /* Tombol Checkbox Styles */
+  /* Checkbox Styles */
   
-  /* Membuat tombol checkbox yang akan digunakan untuk mencentang todo */
   .checkbox {
     margin-right: 12px;
     cursor: pointer;
   }
   
-  /* Tombol Delete Styles */
+  /* Edit Container Styles */
   
-  /* Membuat tombol delete yang akan menghapus todo */
+  .edit-container {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  
+  .edit-field {
+    flex: 1;
+    padding: 8px;
+    border-radius: 6px;
+    border: 1px solid #ccc;
+    font-size: 14px;
+    outline: none;
+    transition: border-color 0.3s;
+  }
+  
+  .edit-field:focus {
+    border-color: #4caf50;
+  }
+  
+  .save-button {
+    background-color: #4caf50;
+    color: white;
+    padding: 8px 12px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: background-color 0.3s, transform 0.3s;
+  }
+  
+  .save-button:hover {
+    background-color: #45a049;
+    transform: scale(1.05);
+  }
+  
+  .cancel-button {
+    background-color: #f44336;
+    color: white;
+    padding: 8px 12px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: background-color 0.3s, transform 0.3s;
+  }
+  
+  .cancel-button:hover {
+    background-color: #d32f2f;
+    transform: scale(1.05);
+  }
+  
+  /* Todo Actions Styles */
+  
+  .todo-actions {
+    display: flex;
+    gap: 8px;
+  }
+  
+  /* Edit Button Styles */
+  
+  .edit-button {
+    background: transparent;
+    border: none;
+    font-size: 18px;
+    cursor: pointer;
+    color: #4caf50;
+    transition: color 0.3s, transform 0.3s;
+  }
+  
+  .edit-button:hover {
+    color: #388e3c;
+    transform: scale(1.1);
+  }
+  
+  /* Delete Button Styles */
+  
   .delete-button {
     background: transparent;
     border: none;
@@ -135,7 +198,6 @@ body {
     transition: color 0.3s, transform 0.3s;
   }
   
-  /* Membuat tombol delete berwarna merah tua saat di hover */
   .delete-button:hover {
     color: #ff2e1a;
     transform: scale(1.1);
@@ -143,7 +205,6 @@ body {
   
   /* Responsive Styles */
   
-  /* Membuat styles yang akan digunakan saat layar berukuran kurang dari 600px */
   @media (max-width: 600px) {
     .app-container {
       margin: 20px auto;
@@ -161,13 +222,22 @@ body {
     }
   
     .todo-item {
+      flex-direction: column;
+      align-items: flex-start;
       padding: 10px;
     }
   
     .todo-description {
       font-size: 14px;
+      margin-bottom: 8px;
     }
   
+    .todo-actions {
+      flex-direction: column;
+      align-items: flex-start;
+    }
+  
+    .edit-button,
     .delete-button {
       font-size: 16px;
     }

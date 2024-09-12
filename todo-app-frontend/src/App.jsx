@@ -2,63 +2,89 @@ import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import './App.css';
 
-
 // Fungsi komponen App
 function App() {
-  // State untuk menyimpan data todo
   const [todos, setTodos] = useState([]);
-  // State untuk menyimpan deskripsi todo yang akan ditambahkan
   const [description, setDescription] = useState('');
-  // State untuk menandai apakah sedang loading atau tidak
   const [loading, setLoading] = useState(false);
+  const [editTodo, setEditTodo] = useState(null);
+  const [editDescription, setEditDescription] = useState('');
 
-  // Fungsi untuk mengambil data todo dari API
   useEffect(() => {
     fetchTodos();
   }, []);
 
-  // Fungsi untuk mengambil data todo dari API
   const fetchTodos = async () => {
-    setLoading(true); // Menandai bahwa sedang loading
+    setLoading(true);
     try {
       const { data } = await axios.get('http://localhost:5000/todos');
-      setTodos(data); // Menyimpan data todo ke state
+      setTodos(data);
     } catch (error) {
-      console.error("Error fetching todos:", error);
+      console.error(
+        "Terjadi kesalahan saat mengambil daftar tugas: ",
+        error.message
+      );
     }
-    setLoading(false); // Menandai bahwa loading sudah selesai
+    setLoading(false);
   };
 
-  // Fungsi untuk menambahkan todo baru
   const addTodo = async () => {
-    if (description.trim() === '') return; // Jika deskripsi kosong, tidak melakukan apa-apa
+    if (description.trim() === '') return;
     try {
-      await axios.post('http://localhost:5000/todos', { description }); // Menambahkan todo baru ke API
-      setDescription(''); // Menghapus deskripsi yang sudah ditambahkan
-      fetchTodos(); // Mengambil data todo terbaru
+      await axios.post('http://localhost:5000/todos', { description });
+      setDescription('');
+      fetchTodos();
     } catch (error) {
-      console.error("Error adding todo:", error);
+      console.error("Terjadi kesalahan saat menambah tugas: ", error.message);
     }
   };
 
-  // Fungsi untuk mengupdate todo
   const updateTodo = async (id, updatedTodo) => {
     try {
-      await axios.put(`http://localhost:5000/todos/${id}`, updatedTodo); // Mengupdate todo di API
-      fetchTodos(); // Mengambil data todo terbaru
+      await axios.put(`http://localhost:5000/todos/${id}`, updatedTodo);
+      fetchTodos();
     } catch (error) {
-      console.error("Error updating todo:", error);
+      console.error(
+        "Terjadi kesalahan saat memperbarui tugas: ",
+        error.message
+      );
     }
   };
 
-  // Fungsi untuk menghapus todo
   const deleteTodo = async (id) => {
     try {
-      await axios.delete(`http://localhost:5000/todos/${id}`); // Menghapus todo di API
-      setTodos(todos.filter(todo => todo.id !== id)); // Menghapus todo dari state
+      await axios.delete(`http://localhost:5000/todos/${id}`);
+      setTodos(todos.filter(todo => todo.id !== id));
     } catch (error) {
-      console.error("Error deleting todo:", error);
+      console.error(
+        "Terjadi kesalahan saat menghapus tugas: ",
+        error.message
+      );
     }
+  };
+
+  const startEdit = (todo) => {
+    setEditTodo(todo);
+    setEditDescription(todo.description);
+  };
+
+  const saveEdit = async () => {
+    if (editDescription.trim() === '') return;
+    try {
+      await updateTodo(editTodo.id, { ...editTodo, description: editDescription });
+      setEditTodo(null);
+      setEditDescription('');
+    } catch (error) {
+      console.error(
+        "Terjadi kesalahan saat menyimpan perubahan: ",
+        error.message
+      );
+    }
+  };
+
+  const cancelEdit = () => {
+    setEditTodo(null);
+    setEditDescription('');
   };
 
   return (
@@ -89,15 +115,35 @@ function App() {
                 }
                 className="checkbox"
               />
-              <span
-                style={{ textDecoration: todo.completed ? 'line-through' : 'none' }}
-                className="todo-description"
-              >
-                {todo.description}
-              </span>
-              <button onClick={() => deleteTodo(todo.id)} className="delete-button">
-                🗑
-              </button>
+              {editTodo && editTodo.id === todo.id ? (
+                <div className="edit-container">
+                  <input
+                    type="text"
+                    value={editDescription}
+                    onChange={(e) => setEditDescription(e.target.value)}
+                    className="edit-field"
+                  />
+                  <button onClick={saveEdit} className="save-button">Simpan</button>
+                  <button onClick={cancelEdit} className="cancel-button">Batal</button>
+                </div>
+              ) : (
+                <>
+                  <span
+                    className="todo-description"
+                    style={{ textDecoration: todo.completed ? 'line-through' : 'none' }}
+                  >
+                    {todo.description}
+                  </span>
+                  <div className="todo-actions">
+                    <button onClick={() => startEdit(todo)} className="edit-button">
+                      ✏️
+                    </button>
+                    <button onClick={() => deleteTodo(todo.id)} className="delete-button">
+                      🗑
+                    </button>
+                  </div>
+                </>
+              )}
             </div>
           ))}
         </div>
