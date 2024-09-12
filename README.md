@@ -1,4 +1,4 @@
-# Todo List Application
+# Aplikasi Todo List - Yudha Satria
 
 Aplikasi Todo List ini memungkinkan pengguna untuk mengelola tugas-tugas mereka. Aplikasi ini dibangun menggunakan **ReactJS** untuk front-end, **ExpressJS** untuk back-end, dan **Sequelize** sebagai ORM untuk migrasi serta seeding database. Database yang digunakan adalah **PostgreSQL**.
 
@@ -10,10 +10,16 @@ Berikut langkah-langkah sederhana untuk mengonfigurasi sistem aplikasi ini:
 1. Pastikan untuk mengclone project ini dengan perintah:
    - Dengan Menggunakan Git :
    ```bash
-   git clone 
+   git clone https://github.com/yudari/todo-app.git
+   cd todo-app
    ```
-3. Pastikan PostgreSQL sudah terinstal di komputer Anda.
-4. Instalasi dependensi untuk back-end dan front-end:
+   - Atau mendownload langsung projectnya pada url https://github.com/yudari/todo-app dan pilih tombol download zip, extract dan buka direktory todo-app, kemudian jalankan perintah:
+     ```bash
+      cd todo-app
+     ```
+    setelah masuk kedalam direktori todo-app, anda sudah siap untuk mengikut langkah selanjutnya,
+2. Pastikan PostgreSQL sudah terinstal di komputer Anda.
+3. Instalasi dependensi untuk back-end dan front-end:
    - Untuk back-end:
       ```
       cd todo-app-backend
@@ -24,7 +30,7 @@ Berikut langkah-langkah sederhana untuk mengonfigurasi sistem aplikasi ini:
       cd todo-app-frontend
       npm install
       ```
-5. Konfigurasi Database:
+4. Konfigurasi Database:
    - File konfigurasi database terletak di:
      ```
      /todo-app-backend/config/config.json
@@ -41,19 +47,19 @@ Berikut langkah-langkah sederhana untuk mengonfigurasi sistem aplikasi ini:
         }
       }
      ```
-6. Membuat Database:
+5. Membuat Database:
    - Masuk ke PostgreSQL dan buat database todo_db:
      ```
      psql -U postgres
      CREATE DATABASE todo_db;
      ```
-7. Migrasi Database:
+6. Migrasi Database:
    - Jalankan migrasi untuk membuat tabel di database:
      ```
      cd todo-app-backend
      npx sequelize db:migrate
      ```
-8. Menjalankan Aplikasi:
+7. Menjalankan Aplikasi:
    - Jalankan server back-end:
      ```
      npm run start
@@ -63,7 +69,7 @@ Berikut langkah-langkah sederhana untuk mengonfigurasi sistem aplikasi ini:
      cd ../todo-app-frontend
      npm run dev
      ```
-9. Dokumentasi API dengan Swagger:
+8. Dokumentasi API dengan Swagger:
    - Buka Swagger UI dibrowser dan untuk melihat spesifikasi API dengan url:
      ```
      [http://localhost:5000/api-docs](http://localhost:5000/api-docs/)
