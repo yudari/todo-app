@@ -3,11 +3,36 @@ const router = express.Router();
 const { Todo } = require('../models');
 
 /**
+ * @swagger
+ * components:
+ *   schemas:
+ *     Todo:
+ *       type: object
+ *       properties:
+ *         id:
+ *           type: integer
+ *           description: ID dari todo
+ *           example: 1
+ *         description:
+ *           type: string
+ *           description: Deskripsi todo
+ *           example: 'Belajar Swagger'
+ *         completed:
+ *           type: boolean
+ *           description: Status selesai dari todo
+ *           example: false
+ *       required:
+ *         - description
+ *         - completed
+ */
+
+/**
  * Mendapatkan semua data todo
  * @swagger
  * /todos:
  *   get:
  *     summary: Mendapatkan semua data todo
+ *     description: Mengambil daftar semua todo yang ada dalam database.
  *     responses:
  *       200:
  *         description: List of todos
@@ -19,6 +44,14 @@ const { Todo } = require('../models');
  *                 $ref: '#/components/schemas/Todo'
  *       500:
  *         description: Internal Server Error
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                   example: 'Terjadi kesalahan internal server'
  */
 router.get('/todos', async (req, res) => {
     try {
@@ -36,6 +69,7 @@ router.get('/todos', async (req, res) => {
  * /todos:
  *   post:
  *     summary: Membuat data todo baru
+ *     description: Menambahkan todo baru ke dalam database.
  *     requestBody:
  *       required: true
  *       content:
@@ -45,10 +79,30 @@ router.get('/todos', async (req, res) => {
  *     responses:
  *       201:
  *         description: Created
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/Todo'
  *       400:
  *         description: Bad Request
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                   example: 'Deskripsi todo harus diisi'
  *       500:
  *         description: Internal Server Error
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                   example: 'Terjadi kesalahan internal server'
  */
 router.post('/todos', async (req, res) => {
     try {
@@ -70,12 +124,14 @@ router.post('/todos', async (req, res) => {
  * /todos/{id}:
  *   put:
  *     summary: Mengupdate data todo
+ *     description: Memperbarui informasi todo yang sudah ada.
  *     parameters:
  *       - in: path
  *         name: id
  *         required: true
  *         schema:
  *           type: integer
+ *           example: 1
  *     requestBody:
  *       required: true
  *       content:
@@ -85,12 +141,40 @@ router.post('/todos', async (req, res) => {
  *     responses:
  *       200:
  *         description: Updated
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/Todo'
  *       400:
  *         description: Bad Request
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                   example: 'Deskripsi todo harus diisi'
  *       404:
  *         description: Not Found
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                   example: 'Todo tidak ditemukan'
  *       500:
  *         description: Internal Server Error
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                   example: 'Terjadi kesalahan internal server'
  */
 router.put('/todos/:id', async (req, res) => {
     try {
@@ -117,19 +201,37 @@ router.put('/todos/:id', async (req, res) => {
  * /todos/{id}:
  *   delete:
  *     summary: Menghapus data todo
+ *     description: Menghapus todo yang sudah ada dalam database.
  *     parameters:
  *       - in: path
  *         name: id
  *         required: true
  *         schema:
  *           type: integer
+ *           example: 1
  *     responses:
  *       204:
  *         description: Deleted
  *       404:
  *         description: Not Found
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                   example: 'Todo tidak ditemukan'
  *       500:
  *         description: Internal Server Error
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                   example: 'Terjadi kesalahan internal server'
  */
 router.delete('/todos/:id', async (req, res) => {
     try {
@@ -147,4 +249,3 @@ router.delete('/todos/:id', async (req, res) => {
 });
 
 module.exports = router;
-

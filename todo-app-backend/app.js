@@ -15,7 +15,7 @@ app.use(express.json());
 
 // Buat dokumentasi API dengan menggunakan swagger-jsdoc dan swagger-ui-express
 const swaggerDocs = swaggerJsdoc(swaggerOptions);
-app.use('/docs', swaggerUi.serve, swaggerUi.setup(swaggerDocs));
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocs));
 
 // Gunakan route untuk menghandle request ke endpoint /todos
 app.use('/', todoRoutes)
