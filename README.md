@@ -14,9 +14,9 @@ Berikut langkah-langkah sederhana untuk mengonfigurasi sistem aplikasi ini:
    cd todo-app
    ```
    - Atau mendownload langsung projectnya pada url https://github.com/yudari/todo-app dan pilih tombol download zip, extract dan buka direktory todo-app, kemudian jalankan perintah:
-     ```bash
-      cd todo-app
-     ```
+   ```bash
+   cd todo-app
+   ```
     setelah masuk kedalam direktori todo-app, anda sudah siap untuk mengikut langkah selanjutnya,
 2. Pastikan PostgreSQL sudah terinstal di komputer Anda.
 3. Instalasi dependensi untuk back-end dan front-end:
