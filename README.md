@@ -2,14 +2,18 @@
 
 Aplikasi Todo List ini memungkinkan pengguna untuk mengelola tugas-tugas mereka. Aplikasi ini dibangun menggunakan **ReactJS** untuk front-end, **ExpressJS** untuk back-end, dan **Sequelize** sebagai ORM untuk migrasi serta seeding database. Database yang digunakan adalah **PostgreSQL**.
 
-## Panduan Konfigurasi Sistem
+## Panduan Pengguna (User Guide)
 
-Ikuti langkah-langkah berikut untuk mengkonfigurasi dan menjalankan sistem:
+### 1. Konfigurasi Sistem
 
-### 1. Konfigurasi Database
-
-1. Pastikan PostgreSQL sudah terinstal di komputer Anda.
-2. Instalasi dependensi untuk back-end dan front-end:
+Berikut langkah-langkah sederhana untuk mengonfigurasi sistem aplikasi ini:
+1. Pastikan untuk mengclone project ini dengan perintah:
+   - Dengan Menggunakan Git :
+   ```bash
+   git clone 
+   ```
+3. Pastikan PostgreSQL sudah terinstal di komputer Anda.
+4. Instalasi dependensi untuk back-end dan front-end:
    - Untuk back-end:
       ```
       cd todo-app-backend
@@ -20,7 +24,7 @@ Ikuti langkah-langkah berikut untuk mengkonfigurasi dan menjalankan sistem:
       cd todo-app-frontend
       npm install
       ```
-3. Konfigurasi Database:
+5. Konfigurasi Database:
    - File konfigurasi database terletak di:
      ```
      /todo-app-backend/config/config.json
@@ -37,85 +41,50 @@ Ikuti langkah-langkah berikut untuk mengkonfigurasi dan menjalankan sistem:
         }
       }
      ```
-4. Membuat Database:
+6. Membuat Database:
    - Masuk ke PostgreSQL dan buat database todo_db:
      ```
      psql -U postgres
      CREATE DATABASE todo_db;
-     ``` 
-6. Edit informasi koneksi database:
-   ```javascript
-   const pool = new Pool({
-     user: 'your_username',
-     host: 'localhost',
-     database: 'todo_db',
-     password: 'your_password',
-     port: 5432,
-   });
-   ```
-   Ganti `your_username` dan `your_password` dengan kredensial PostgreSQL Anda.
+     ```
+7. Migrasi Database:
+   - Jalankan migrasi untuk membuat tabel di database:
+     ```
+     cd todo-app-backend
+     npx sequelize db:migrate
+     ```
+8. Menjalankan Aplikasi:
+   - Jalankan server back-end:
+     ```
+     npm run start
+     ```
+   - Jalankan server front-end:
+     ```
+     cd ../todo-app-frontend
+     npm run dev
+     ```
+9. Dokumentasi API dengan Swagger:
+   - Buka Swagger UI dibrowser dan untuk melihat spesifikasi API dengan url:
+     ```
+     [http://localhost:5000/api-docs](http://localhost:5000/api-docs/)
+     ```
 
-### 2. Membuat Database dan Menjalankan Migrasi
-
-1. Buka terminal dan masuk ke PostgreSQL:
-   ```
-   psql -U your_username -d postgres
-   ```
-2. Buat database baru:
-   ```sql
-   CREATE DATABASE todo_db;
-   ```
-3. Hubungkan ke database baru:
-   ```
-   \c todo_db
-   ```
-4. Jalankan script migrasi:
-   ```
-   \i backend/migrations/001_create_tasks_table.sql
-   ```
-
-### 3. Menginstal Dependensi
-
-1. Buka terminal di folder `backend`:
-   ```
-   cd backend
-   npm install
-   ```
-2. Buka terminal baru di folder `frontend`:
-   ```
-   cd frontend
-   npm install
-   ```
-
-### 4. Menjalankan Aplikasi
-
-1. Di terminal `backend`, jalankan:
-   ```
-   node server.js
-   ```
-2. Di terminal `frontend`, jalankan:
-   ```
-   npm start
-   ```
-
-Aplikasi sekarang berjalan! Backend tersedia di `http://localhost:3001` dan frontend di `http://localhost:3000`.
+Aplikasi sekarang berjalan! Backend tersedia di `http://localhost:5000` dan frontend di `[http://localhost:3000](http://localhost:3000/)`.
 
 ## Fitur Sistem
 
 Aplikasi Todo List ini memiliki fitur-fitur berikut:
 
-1. **Menambah Tugas**: Masukkan deskripsi tugas dan klik "Add" untuk menambahkan tugas baru.
+1. **Menambah Tugas**: Masukkan deskripsi tugas dan klik "+" untuk menambahkan tugas baru.
 
 2. **Menandai Tugas Selesai**: Klik checkbox di sebelah tugas untuk menandainya sebagai selesai.
 
-3. **Mengedit Tugas**: Klik pada deskripsi tugas untuk mengeditnya.
+3. **Mengedit Tugas**: Klik tombol "pensil" pada deskripsi tugas untuk mengeditnya.
 
-4. **Menghapus Tugas**: Klik tombol "Delete" di sebelah tugas untuk menghapusnya.
+4. **Menghapus Tugas**: Klik tombol "tong sampah / trash" di sebelah tugas untuk menghapusnya.
+   
+5. **Tampilan Responsif**: Antarmuka pengguna yang responsif dan mudah digunakan.
 
-5. **Mengatur Ulang Tugas**: Gunakan fitur drag-and-drop untuk mengubah urutan tugas.
-
-6. **Tampilan Responsif**: Antarmuka pengguna yang responsif dan mudah digunakan.
-
-7. **API Documentation**: Dokumentasi API tersedia melalui Swagger UI di `http://localhost:3001/api-docs`.
+6. **API Documentation**: Dokumentasi API tersedia melalui Swagger UI di `http://localhost:5000/api-docs`.
 
 Selamat menggunakan aplikasi Todo List!
