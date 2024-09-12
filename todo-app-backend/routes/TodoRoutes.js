@@ -3,23 +3,11 @@ const router = express.Router();
 const { Todo } = require('../models');
 
 /**
- * @swagger
- * components:
- *   schemas:
- *     Todo:
- *       type: object
- *       properties:
- *         description:
- *           type: string
- *         completed:
- *           type: boolean
- */
-
-/**
+ * Mendapatkan semua data todo
  * @swagger
  * /todos:
  *   get:
- *     summary: Get all todos
+ *     summary: Mendapatkan semua data todo
  *     responses:
  *       200:
  *         description: List of todos
@@ -38,15 +26,16 @@ router.get('/todos', async (req, res) => {
         res.json(todos);
     } catch (err) {
         console.error(err);
-        res.status(500).json({ message: 'Internal Server Error' });
+        res.status(500).json({ message: 'Terjadi kesalahan internal server' });
     }
 });
 
 /**
+ * Membuat data todo baru
  * @swagger
  * /todos:
  *   post:
- *     summary: Create a new todo
+ *     summary: Membuat data todo baru
  *     requestBody:
  *       required: true
  *       content:
@@ -65,21 +54,22 @@ router.post('/todos', async (req, res) => {
     try {
         const { description, completed } = req.body;
         if (!description) {
-            return res.status(400).json({ message: 'Description is required' });
+            return res.status(400).json({ message: 'Deskripsi todo harus diisi' });
         }
         const newTodo = await Todo.create({ description, completed: completed || false });
         res.status(201).json(newTodo);
     } catch (err) {
         console.error(err);
-        res.status(500).json({ message: 'Internal Server Error' });
+        res.status(500).json({ message: 'Terjadi kesalahan internal server' });
     }
 });
 
 /**
+ * Mengupdate data todo
  * @swagger
  * /todos/{id}:
  *   put:
- *     summary: Update a todo
+ *     summary: Mengupdate data todo
  *     parameters:
  *       - in: path
  *         name: id
@@ -107,25 +97,26 @@ router.put('/todos/:id', async (req, res) => {
         const { id } = req.params;
         const { description, completed } = req.body;
         if (!description) {
-            return res.status(400).json({ message: 'Description is required' });
+            return res.status(400).json({ message: 'Deskripsi todo harus diisi' });
         }
         const todo = await Todo.findByPk(id);
         if (!todo) {
-            return res.status(404).json({ message: 'Todo not found' });
+            return res.status(404).json({ message: 'Todo tidak ditemukan' });
         }
         await todo.update({ description, completed });
         res.json(todo);
     } catch (err) {
         console.error(err);
-        res.status(500).json({ message: 'Internal Server Error' });
+        res.status(500).json({ message: 'Terjadi kesalahan internal server' });
     }
 });
 
 /**
+ * Menghapus data todo
  * @swagger
  * /todos/{id}:
  *   delete:
- *     summary: Delete a todo
+ *     summary: Menghapus data todo
  *     parameters:
  *       - in: path
  *         name: id
@@ -145,14 +136,15 @@ router.delete('/todos/:id', async (req, res) => {
         const { id } = req.params;
         const todo = await Todo.findByPk(id);
         if (!todo) {
-            return res.status(404).json({ message: 'Todo not found' });
+            return res.status(404).json({ message: 'Todo tidak ditemukan' });
         }
         await todo.destroy();
         res.sendStatus(204);
     } catch (err) {
         console.error(err);
-        res.status(500).json({ message: 'Internal Server Error' });
+        res.status(500).json({ message: 'Terjadi kesalahan internal server' });
     }
 });
 
 module.exports = router;
+

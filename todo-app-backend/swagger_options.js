@@ -5,7 +5,7 @@ const swaggerOptions = {
         info: {
             title: 'Todo API',
             version: '1.0.0',
-            description: 'A simple API to manage Todos'
+            description: 'Sebuah Simpel API untuk aplikasi Todo Sederhana'
         }
     },
     apis: ['./routes/*.js'],
