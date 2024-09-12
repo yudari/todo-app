@@ -10,12 +10,40 @@ Ikuti langkah-langkah berikut untuk mengkonfigurasi dan menjalankan sistem:
 
 1. Pastikan PostgreSQL sudah terinstal di komputer Anda.
 2. Instalasi dependensi untuk back-end dan front-end:
-   ```
-   cd todo-app-backend
-   npm install
-   ```
-
-4. Edit informasi koneksi database:
+   - Untuk back-end:
+      ```
+      cd todo-app-backend
+      npm install
+      ```
+   - Untuk front-end:
+      ```
+      cd todo-app-frontend
+      npm install
+      ```
+3. Konfigurasi Database:
+   - File konfigurasi database terletak di:
+     ```
+     /todo-app-backend/config/config.json
+     ```
+   - Sesuaikan pengaturan database sesuai dengan lingkungan lokal Anda:
+     ```json
+      {
+        "development": {
+          "username": "postgres",
+          "password": "password_anda",
+          "database": "todo_db",
+          "host": "127.0.0.1",
+          "dialect": "postgres"
+        }
+      }
+     ```
+4. Membuat Database:
+   - Masuk ke PostgreSQL dan buat database todo_db:
+     ```
+     psql -U postgres
+     CREATE DATABASE todo_db;
+     ``` 
+6. Edit informasi koneksi database:
    ```javascript
    const pool = new Pool({
      user: 'your_username',
