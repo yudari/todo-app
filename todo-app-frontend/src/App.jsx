@@ -1,7 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
 import './App.css';
+
+// Function to reorder the list
+const reorder = (list, startIndex, endIndex) => {
+  const result = Array.from(list);
+  const [removed] = result.splice(startIndex, 1);
+  result.splice(endIndex, 0, removed);
+  return result;
+};
 
 function App() {
   const [todos, setTodos] = useState([]);
@@ -52,14 +59,6 @@ function App() {
     }
   };
 
-  const handleDragEnd = (result) => {
-    if (!result.destination) return;
-    const items = Array.from(todos);
-    const [reorderedItem] = items.splice(result.source.index, 1);
-    items.splice(result.destination.index, 0, reorderedItem);
-    setTodos(items);
-  };
-
   return (
     <div className="app-container">
       <h1>Todo List</h1>
@@ -75,45 +74,31 @@ function App() {
       </div>
 
       {loading ? (
-        <p>Loading...</p>
+        <p className="loading-text">Loading...</p>
       ) : (
-        <DragDropContext onDragEnd={handleDragEnd}>
-          <Droppable droppableId="todos">
-            {(provided) => (
-              <ul {...provided.droppableProps} ref={provided.innerRef} className="todo-list">
-                {todos.map((todo, index) => (
-                  <Draggable key={todo.id} draggableId={String(todo.id)} index={index}>
-                    {(provided) => (
-                      <li
-                        ref={provided.innerRef}
-                        {...provided.draggableProps}
-                        {...provided.dragHandleProps}
-                        className={`todo-item ${todo.completed ? 'completed' : ''}`}
-                      >
-                        <input
-                          type="checkbox"
-                          checked={todo.completed}
-                          onChange={() =>
-                            updateTodo(todo.id, { ...todo, completed: !todo.completed })
-                          }
-                          className="checkbox"
-                        />
-                        <span
-                          className="todo-description"
-                        >
-                          {todo.description}
-                        </span>
-                        <button onClick={() => deleteTodo(todo.id)} className="delete-button">
-                          🗑
-                        </button>
-                      </li>
-                    )}
-                  </Draggable>
-                ))}
-              </ul>
-            )}
-          </Droppable>
-        </DragDropContext>
+        <div className="todo-container">
+          {todos.map((todo) => (
+            <div key={todo.id} className="todo-item">
+              <input
+                type="checkbox"
+                checked={todo.completed}
+                onChange={() =>
+                  updateTodo(todo.id, { ...todo, completed: !todo.completed })
+                }
+                className="checkbox"
+              />
+              <span
+                style={{ textDecoration: todo.completed ? 'line-through' : 'none' }}
+                className="todo-description"
+              >
+                {todo.description}
+              </span>
+              <button onClick={() => deleteTodo(todo.id)} className="delete-button">
+                🗑
+              </button>
+            </div>
+          ))}
+        </div>
       )}
     </div>
   );
